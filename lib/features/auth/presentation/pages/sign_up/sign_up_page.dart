@@ -1,30 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:todaily/core/common/widgets/backgrounds/gradient_background.dart';
-import 'package:todaily/core/common/widgets/button.dart';
-import 'package:todaily/core/common/widgets/input.dart';
-import 'package:todaily/core/config/env.dart';
 import 'package:todaily/core/extensions/build_context_ext.dart';
 import 'package:todaily/core/extensions/widget_ext.dart';
 import 'package:todaily/core/resources/color_res.dart';
 import 'package:todaily/core/resources/edge_insets_res.dart';
-import 'package:todaily/features/auth/presentation/pages/sign_up/sign_up_page.dart';
-import 'package:todaily/features/auth/presentation/widgets/sign_in_form.dart';
+import 'package:todaily/features/auth/presentation/pages/sign_in/sign_in_page.dart';
 import 'package:todaily/features/auth/presentation/widgets/sign_up_form.dart';
 
-class SignInPage extends StatefulWidget {
+class SignUpPage extends StatefulWidget {
   static const String path = '/SignInPage';
 
   static route() => MaterialPageRoute(
-        builder: (_) => const SignInPage(),
+        builder: (_) => const SignUpPage(),
       );
 
-  const SignInPage({super.key});
+  const SignUpPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,22 +35,22 @@ class _SignInPageState extends State<SignInPage> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Sign\nIn',
+                    'Sign\nUp',
                     style: context.textTheme.displayMedium,
                   ),
                 ).padding(bottom: 32),
-                const SignInForm().padding(bottom: 32),
+                const SignUpForm().padding(bottom: 32),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(SignUpPage.route());
+                    Navigator.of(context).push(SignInPage.route());
                   },
                   child: RichText(
                     text: TextSpan(
-                      text: "Don't have an account?",
+                      text: "Already have an account?",
                       style: context.textTheme.bodyMedium,
                       children: [
                         TextSpan(
-                          text: " Sign Up",
+                          text: " Sign In",
                           style: context.textTheme.titleSmall!.copyWith(
                             color: ColorRes.SKY500,
                           ),
