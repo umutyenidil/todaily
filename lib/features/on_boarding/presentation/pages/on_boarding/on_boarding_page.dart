@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:todaily/core/common/widgets/backgrounds/gradient_background.dart';
 import 'package:todaily/core/extensions/build_context_ext.dart';
 import 'package:todaily/core/resources/color_res.dart';
 import 'package:todaily/core/resources/edge_insets_res.dart';
 import 'package:todaily/core/resources/vector_res.dart';
+import 'package:todaily/features/auth/presentation/pages/sign_in/sign_in_page.dart';
+import 'package:todaily/features/on_boarding/presentation/blocs/on_boarding/on_boarding_bloc.dart';
 import 'package:todaily/features/on_boarding/presentation/widgets/on_boarding_content.dart';
 
 class OnBoardingPage extends StatefulWidget {
@@ -26,7 +29,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   @override
   void dispose() {
     _pageController.dispose();
-
     super.dispose();
   }
 
@@ -50,7 +52,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 Expanded(
                   child: PageView(
                     controller: _pageController,
-                    physics: const ClampingScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     children: const [
                       OnBoardingContent(
                         vector: VectorRes.TODO,
@@ -81,12 +83,27 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                         minimumSize: const Size(double.infinity, 0),
                         padding: EdgeInsetsRes.ALL12,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
-                    onPressed: () {},
-                    child: Text(
-                      'Next',
-                      style: context.textTheme.titleMedium!.copyWith(
-                        color: ColorRes.WHITE,
-                      ),
+                    onPressed: () {
+                      if (_pageController.page == 2.0) {
+                        context.read<OnBoardingBloc>().add(CacheFirstTimeEvent());
+                        Navigator.of(context).pushReplacement(SignInPage.route());
+                        return;
+                      }
+                      _pageController.nextPage(
+                        duration: const Duration(milliseconds: 250),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    child: StatefulBuilder(
+                      builder: (_, refresh) {
+                        _pageController.addListener(() => refresh(() {}));
+                        return Text(
+                          _pageController.page == 2.0 ? "Let's Start" : 'Next',
+                          style: context.textTheme.titleMedium!.copyWith(
+                            color: ColorRes.WHITE,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
