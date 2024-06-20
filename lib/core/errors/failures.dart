@@ -33,15 +33,15 @@ class CacheFailure extends Failure {
         );
 }
 
-// class ServerFailure extends Failure {
-//   ServerFailure({
-//     required super.message,
-//     required super.statusCode,
-//   });
-//
-//   ServerFailure.fromException(ServerException exception)
-//       : super(
-//           message: exception.message,
-//           statusCode: exception.statusCode,
-//         );
-// }
+class ServerFailure extends Failure {
+  ServerFailure({
+    super.message = 'Something went wrong on the server',
+    super.code = '400',
+  });
+
+  ServerFailure.fromException(ServerException exception)
+      : super(
+          message: exception.message,
+          code: exception.code,
+        );
+}

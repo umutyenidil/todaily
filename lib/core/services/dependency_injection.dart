@@ -1,5 +1,12 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:todaily/features/auth/data/data_sources/auth_remote_data_src.dart';
+import 'package:todaily/features/auth/data/data_sources/auth_remote_data_src_impl.dart';
+import 'package:todaily/features/auth/data/repositories/auth_repo_impl.dart';
+import 'package:todaily/features/auth/domain/repositories/auth_repo.dart';
+import 'package:todaily/features/auth/domain/use_cases/sign_up_use_case.dart';
+import 'package:todaily/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:todaily/features/on_boarding/data/data_sources/on_boarding_local_data_src.dart';
 import 'package:todaily/features/on_boarding/data/data_sources/on_boarding_local_data_src_impl.dart';
 import 'package:todaily/features/on_boarding/data/repositories/on_boarding_repo_impl.dart';
@@ -12,6 +19,34 @@ final sl = GetIt.instance;
 
 Future<void> injectDependencies() async {
   await injectOnBoarding();
+  await injectAuth();
+}
+
+Future<void> injectAuth() async {
+  sl
+    ..registerFactory<SupabaseClient>(
+      () => Supabase.instance.client,
+    )
+    ..registerFactory<AuthRemoteDataSrc>(
+      () => AuthRemoteDataSrcImpl(
+        supabase: sl<SupabaseClient>(),
+      ),
+    )
+    ..registerFactory<AuthRepo>(
+      () => AuthRepoImpl(
+        remoteSrc: sl<AuthRemoteDataSrc>(),
+      ),
+    )
+    ..registerFactory<SignUpUseCase>(
+      () => SignUpUseCase(
+        repo: sl<AuthRepo>(),
+      ),
+    )
+    ..registerFactory<AuthBloc>(
+      () => AuthBloc(
+        signUp: sl<SignUpUseCase>(),
+      ),
+    );
 }
 
 Future<void> injectOnBoarding() async {

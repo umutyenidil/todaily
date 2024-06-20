@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todaily/core/common/widgets/backgrounds/gradient_background.dart';
 import 'package:todaily/core/extensions/build_context_ext.dart';
 import 'package:todaily/core/extensions/widget_ext.dart';
 import 'package:todaily/core/resources/color_res.dart';
 import 'package:todaily/core/resources/edge_insets_res.dart';
+import 'package:todaily/core/utils/snack_bar_utils.dart';
+import 'package:todaily/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:todaily/features/auth/presentation/pages/sign_in/sign_in_page.dart';
 import 'package:todaily/features/auth/presentation/widgets/sign_up_form.dart';
 
 class SignUpPage extends StatefulWidget {
   static const String path = '/SignInPage';
 
-  static route() => MaterialPageRoute(
+  static route() =>
+      MaterialPageRoute(
         builder: (_) => const SignUpPage(),
       );
 
@@ -23,43 +27,50 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      body: GradientBackground(
-        child: SafeArea(
-          child: Padding(
-            padding: EdgeInsetsRes.ALL16,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Sign\nUp',
-                    style: context.textTheme.displayMedium,
-                  ),
-                ).padding(bottom: 32),
-                const SignUpForm().padding(bottom: 32),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(SignInPage.route());
-                  },
-                  child: RichText(
-                    text: TextSpan(
-                      text: "Already have an account?",
-                      style: context.textTheme.bodyMedium,
-                      children: [
-                        TextSpan(
-                          text: " Sign In",
-                          style: context.textTheme.titleSmall!.copyWith(
-                            color: ColorRes.SKY500,
-                          ),
-                        ),
-                      ],
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if(state is AuthError){
+          SnackBarUtils.showSnackBar(context, state.message);
+        }
+      },
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        body: GradientBackground(
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsetsRes.ALL16,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Sign\nUp',
+                      style: context.textTheme.displayMedium,
                     ),
-                  ),
-                )
-              ],
+                  ).padding(bottom: 32),
+                  const SignUpForm().padding(bottom: 32),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(SignInPage.route());
+                    },
+                    child: RichText(
+                      text: TextSpan(
+                        text: "Already have an account?",
+                        style: context.textTheme.bodyMedium,
+                        children: [
+                          TextSpan(
+                            text: " Sign In",
+                            style: context.textTheme.titleSmall!.copyWith(
+                              color: ColorRes.SKY500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
