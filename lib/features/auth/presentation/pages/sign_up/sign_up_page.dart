@@ -9,7 +9,7 @@ import 'package:todaily/core/utils/snack_bar_utils.dart';
 import 'package:todaily/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:todaily/features/auth/presentation/pages/sign_in/sign_in_page.dart';
 import 'package:todaily/features/auth/presentation/widgets/sign_up_form.dart';
-import 'package:todaily/features/todo/presentation/pages/todo_page.dart';
+import 'package:todaily/features/todo/presentation/pages/todos/todo_page.dart';
 
 class SignUpPage extends StatefulWidget {
   static const String path = '/SignInPage';
@@ -30,7 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthSignUpSuccess) {
-          Navigator.of(context).pushReplacement(TodoPage.route());
+          Navigator.of(context).pushReplacement(TodosPage.route());
         }
         if (state is AuthError) {
           SnackBarUtils.showSnackBar(context, state.message);

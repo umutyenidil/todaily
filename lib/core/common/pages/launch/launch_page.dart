@@ -7,7 +7,7 @@ import 'package:todaily/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:todaily/features/auth/presentation/pages/sign_in/sign_in_page.dart';
 import 'package:todaily/features/on_boarding/presentation/blocs/on_boarding/on_boarding_bloc.dart';
 import 'package:todaily/features/on_boarding/presentation/pages/on_boarding/on_boarding_page.dart';
-import 'package:todaily/features/todo/presentation/pages/todo_page.dart';
+import 'package:todaily/features/todo/presentation/pages/todos/todo_page.dart';
 
 class LaunchPage extends StatefulWidget {
   static const String path = '/LaunchPage';
@@ -52,7 +52,7 @@ class _LaunchPageState extends State<LaunchPage> {
             if (state is AuthGetCurrentUserSuccess) {
               final user = state.user;
               if (user != null) {
-                Navigator.of(context).pushReplacement(TodoPage.route());
+                Navigator.of(context).pushReplacement(TodosPage.route());
               } else {
                 Navigator.of(context).pushReplacement(SignInPage.route());
               }

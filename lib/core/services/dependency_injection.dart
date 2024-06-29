@@ -16,12 +16,19 @@ import 'package:todaily/features/on_boarding/domain/repositories/on_boarding_rep
 import 'package:todaily/features/on_boarding/domain/use_cases/cache_first_time_use_case.dart';
 import 'package:todaily/features/on_boarding/domain/use_cases/is_first_time_use_case.dart';
 import 'package:todaily/features/on_boarding/presentation/blocs/on_boarding/on_boarding_bloc.dart';
+import 'package:todaily/features/todo/data/data_sources/todo_remote_data_source.dart';
+import 'package:todaily/features/todo/data/data_sources/todo_remote_data_source_impl.dart';
+import 'package:todaily/features/todo/data/repositories/todo_repository_impl.dart';
+import 'package:todaily/features/todo/domain/repositories/todo_repository.dart';
+import 'package:todaily/features/todo/domain/use_cases/add_todo_use_case.dart';
+import 'package:todaily/features/todo/presentation/blocs/todo/todo_bloc.dart';
 
 final sl = GetIt.instance;
 
 Future<void> injectDependencies() async {
   await injectOnBoarding();
   await injectAuth();
+  await injectTodo();
 }
 
 Future<void> injectAuth() async {
@@ -51,6 +58,30 @@ Future<void> injectAuth() async {
       () => AuthBloc(
         signUp: sl<SignUpUseCase>(),
         getCurrentUser: sl<GetCurrentUserUseCase>(),
+      ),
+    );
+}
+
+Future<void> injectTodo() async {
+  sl
+    ..registerFactory<TodoRemoteDataSource>(
+      () => TodoRemoteDataSourceImpl(
+        firebaseFirestore: FirebaseFirestore.instance,
+      ),
+    )
+    ..registerFactory<TodoRepository>(
+      () => TodoRepositoryImpl(
+        remoteDataSource: sl<TodoRemoteDataSource>(),
+      ),
+    )
+    ..registerFactory<AddTodoUseCase>(
+      () => AddTodoUseCase(
+        repository: sl<TodoRepository>(),
+      ),
+    )
+    ..registerFactory<TodoBloc>(
+      () => TodoBloc(
+        addTodo: sl<AddTodoUseCase>(),
       ),
     );
 }

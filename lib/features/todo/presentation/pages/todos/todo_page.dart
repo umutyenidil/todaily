@@ -4,18 +4,18 @@ import 'package:todaily/core/common/widgets/backgrounds/gradient_background.dart
 import 'package:todaily/core/resources/color_res.dart';
 import 'package:todaily/features/todo/presentation/widgets/todo_fab.dart';
 
-import '../widgets/date_list.dart';
-import '../widgets/todo_card.dart';
-import '../widgets/todo_page_app_bar.dart';
+import '../../widgets/date_list.dart';
+import '../../widgets/todo_card.dart';
+import '../../widgets/todo_page_app_bar.dart';
 
-class TodoPage extends StatelessWidget {
+class TodosPage extends StatelessWidget {
   static const String path = '/TodoPage';
 
   static route() => MaterialPageRoute(
-        builder: (_) => const TodoPage(),
+        builder: (_) => const TodosPage(),
       );
 
-  const TodoPage({super.key});
+  const TodosPage({super.key});
 
   @override
   Widget build(BuildContext context) {
