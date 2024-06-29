@@ -19,3 +19,8 @@ final class AddTodoEvent extends TodoEvent {
         description,
       ];
 }
+
+final class GetTodosEvent extends TodoEvent {
+  @override
+  List<Object?> get props => [];
+}

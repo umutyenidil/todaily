@@ -4,4 +4,6 @@ import '../errors/failures.dart';
 
 typedef ResultFuture<T> = Future<Either<Failure, T>>;
 
+typedef ResultStream<T> = Stream<Either<Failure, T>>;
+
 typedef ResultMap = Map<String, dynamic>;

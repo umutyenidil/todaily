@@ -21,6 +21,7 @@ import 'package:todaily/features/todo/data/data_sources/todo_remote_data_source_
 import 'package:todaily/features/todo/data/repositories/todo_repository_impl.dart';
 import 'package:todaily/features/todo/domain/repositories/todo_repository.dart';
 import 'package:todaily/features/todo/domain/use_cases/add_todo_use_case.dart';
+import 'package:todaily/features/todo/domain/use_cases/get_todos_use_case.dart';
 import 'package:todaily/features/todo/presentation/blocs/todo/todo_bloc.dart';
 
 final sl = GetIt.instance;
@@ -79,9 +80,15 @@ Future<void> injectTodo() async {
         repository: sl<TodoRepository>(),
       ),
     )
+    ..registerFactory<GetTodosUseCase>(
+      () => GetTodosUseCase(
+        repository: sl<TodoRepository>(),
+      ),
+    )
     ..registerFactory<TodoBloc>(
       () => TodoBloc(
         addTodo: sl<AddTodoUseCase>(),
+        getTodos: sl<GetTodosUseCase>(),
       ),
     );
 }

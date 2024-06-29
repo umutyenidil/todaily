@@ -7,7 +7,7 @@ import 'package:todaily/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:todaily/features/auth/presentation/pages/sign_in/sign_in_page.dart';
 import 'package:todaily/features/on_boarding/presentation/blocs/on_boarding/on_boarding_bloc.dart';
 import 'package:todaily/features/on_boarding/presentation/pages/on_boarding/on_boarding_page.dart';
-import 'package:todaily/features/todo/presentation/pages/todos/todo_page.dart';
+import 'package:todaily/features/todo/presentation/pages/todos/todos_page.dart';
 
 class LaunchPage extends StatefulWidget {
   static const String path = '/LaunchPage';
