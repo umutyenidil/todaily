@@ -5,7 +5,6 @@ import 'package:todaily/core/common/widgets/backgrounds/gradient_background.dart
 import 'package:todaily/core/resources/lottie_res.dart';
 import 'package:todaily/features/auth/presentation/pages/sign_in/sign_in_page.dart';
 import 'package:todaily/features/on_boarding/presentation/blocs/on_boarding/on_boarding_bloc.dart';
-import 'package:todaily/features/on_boarding/presentation/blocs/on_boarding/on_boarding_bloc.dart';
 import 'package:todaily/features/on_boarding/presentation/pages/on_boarding/on_boarding_page.dart';
 
 class LaunchPage extends StatefulWidget {

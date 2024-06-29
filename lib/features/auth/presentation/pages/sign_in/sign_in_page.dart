@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:todaily/core/common/widgets/backgrounds/gradient_background.dart';
-import 'package:todaily/core/common/widgets/button.dart';
-import 'package:todaily/core/common/widgets/input.dart';
-import 'package:todaily/core/config/env.dart';
 import 'package:todaily/core/extensions/build_context_ext.dart';
 import 'package:todaily/core/extensions/widget_ext.dart';
 import 'package:todaily/core/resources/color_res.dart';
 import 'package:todaily/core/resources/edge_insets_res.dart';
 import 'package:todaily/features/auth/presentation/pages/sign_up/sign_up_page.dart';
 import 'package:todaily/features/auth/presentation/widgets/sign_in_form.dart';
-import 'package:todaily/features/auth/presentation/widgets/sign_up_form.dart';
 
 class SignInPage extends StatefulWidget {
   static const String path = '/SignInPage';

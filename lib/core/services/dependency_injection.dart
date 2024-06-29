@@ -1,6 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todaily/features/auth/data/data_sources/auth_remote_data_src.dart';
 import 'package:todaily/features/auth/data/data_sources/auth_remote_data_src_impl.dart';
 import 'package:todaily/features/auth/data/repositories/auth_repo_impl.dart';
@@ -24,12 +25,10 @@ Future<void> injectDependencies() async {
 
 Future<void> injectAuth() async {
   sl
-    ..registerFactory<SupabaseClient>(
-      () => Supabase.instance.client,
-    )
     ..registerFactory<AuthRemoteDataSrc>(
       () => AuthRemoteDataSrcImpl(
-        supabase: sl<SupabaseClient>(),
+        firebaseAuth: FirebaseAuth.instance,
+        firebaseFirestore: FirebaseFirestore.instance,
       ),
     )
     ..registerFactory<AuthRepo>(

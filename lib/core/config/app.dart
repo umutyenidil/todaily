@@ -5,6 +5,7 @@ import 'package:todaily/core/config/env.dart';
 import 'package:todaily/core/services/dependency_injection.dart';
 import 'package:todaily/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:todaily/features/on_boarding/presentation/blocs/on_boarding/on_boarding_bloc.dart';
+import 'package:todaily/features/todo/presentation/pages/todo_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

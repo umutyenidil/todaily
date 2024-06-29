@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "387227850094",
+    "project_id": "todaily-8afad",
+    "storage_bucket": "todaily-8afad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387227850094:android:c5013afc612b67c0445d7f",
+        "android_client_info": {
+          "package_name": "com.umutyenidil.todaily"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrx07bztE2cka0JilDazHbgpa_IHH0Kv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

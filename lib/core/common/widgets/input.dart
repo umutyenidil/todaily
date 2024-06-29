@@ -3,6 +3,7 @@ import 'package:iconsax/iconsax.dart';
 
 class Input extends StatefulWidget {
   final TextEditingController controller;
+  final int maxLines;
   final TextInputType? type;
   final String? hint;
   final bool obscure;
@@ -19,6 +20,7 @@ class Input extends StatefulWidget {
     this.isRequired = true,
     this.validator,
     this.backgroundColor,
+    this.maxLines = 1,
   });
 
   @override
@@ -43,6 +45,7 @@ class _InputState extends State<Input> {
 
         return widget.validator?.call(value);
       },
+      maxLines: widget.maxLines,
       decoration: InputDecoration(
         filled: widget.backgroundColor != null,
         fillColor: widget.backgroundColor,
