@@ -22,3 +22,8 @@ final class SignUpEvent extends AuthEvent {
         password,
       ];
 }
+
+final class GetCurrentUserEvent extends AuthEvent {
+  @override
+  List<Object?> get props => [];
+}

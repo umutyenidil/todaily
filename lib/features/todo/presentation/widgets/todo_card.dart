@@ -44,29 +44,28 @@ class TodoCard extends StatelessWidget {
                         ),
                         IconButton(
                           onPressed: () {
-                            print('test');
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Iconsax.candle,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Divider(
+                  const Divider(
                     color: ColorRes.BLACK,
                   ),
                   Text(
                     "test" * math.Random().nextInt(100),
                     textAlign: TextAlign.start,
-                    style: TextStyle(fontSize: 13),
+                    style: const TextStyle(fontSize: 13),
                   ),
                 ],
               ),
             ),
           ),
         ),
-        Align(
+        const Align(
           alignment: Alignment.center,
           child: FractionallySizedBox(
             widthFactor: 0.5,

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -9,7 +8,7 @@ import 'package:todaily/core/resources/edge_insets_res.dart';
 import 'package:todaily/core/resources/vector_res.dart';
 
 class DateList extends StatefulWidget {
-  DateList({super.key});
+  const DateList({super.key});
 
   @override
   State<DateList> createState() => _DateListState();

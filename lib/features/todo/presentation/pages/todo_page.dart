@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:todaily/core/common/widgets/backgrounds/gradient_background.dart';
 import 'package:todaily/core/resources/color_res.dart';
 import 'package:todaily/features/todo/presentation/widgets/todo_fab.dart';
@@ -27,12 +26,12 @@ class TodoPage extends StatelessWidget {
       body: GradientBackground(
         child: Column(
           children: [
-            SafeArea(
+            const SafeArea(
               child: DateList(),
             ),
             Expanded(
               child: DecoratedBox(
-                decoration: ShapeDecoration(
+                decoration: const ShapeDecoration(
                   color: ColorRes.WHITE,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(

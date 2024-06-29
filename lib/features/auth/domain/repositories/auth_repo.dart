@@ -7,4 +7,6 @@ abstract interface class AuthRepo {
     required String emailAddress,
     required String password,
   });
+
+  ResultFuture<UserEntity?> getCurrentUser();
 }

@@ -29,3 +29,16 @@ final class AuthSignUpSuccess extends AuthState {
   @override
   List<Object?> get props => [];
 }
+
+final class AuthGetCurrentUserSuccess extends AuthState {
+  final UserEntity? user;
+
+  const AuthGetCurrentUserSuccess({
+    required this.user,
+  });
+
+  @override
+  List<Object?> get props => [
+        user,
+      ];
+}

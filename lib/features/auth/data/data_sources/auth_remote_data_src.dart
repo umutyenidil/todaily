@@ -6,4 +6,6 @@ abstract interface class AuthRemoteDataSrc {
     required String emailAddress,
     required String password,
   });
+
+  Future<UserModel?> getCurrentUser();
 }

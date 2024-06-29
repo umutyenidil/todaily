@@ -33,4 +33,17 @@ class AuthRepoImpl implements AuthRepo {
       );
     }
   }
+
+  @override
+  ResultFuture<UserEntity?> getCurrentUser() async{
+    try {
+      final result = await remoteSrc.getCurrentUser();
+
+      return Right(result as UserEntity);
+    } on ServerException catch (e) {
+      return Left(
+        ServerFailure(message: e.message),
+      );
+    }
+  }
 }

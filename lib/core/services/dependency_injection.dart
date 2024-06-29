@@ -6,6 +6,7 @@ import 'package:todaily/features/auth/data/data_sources/auth_remote_data_src.dar
 import 'package:todaily/features/auth/data/data_sources/auth_remote_data_src_impl.dart';
 import 'package:todaily/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:todaily/features/auth/domain/repositories/auth_repo.dart';
+import 'package:todaily/features/auth/domain/use_cases/get_current_user_use_case.dart';
 import 'package:todaily/features/auth/domain/use_cases/sign_up_use_case.dart';
 import 'package:todaily/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:todaily/features/on_boarding/data/data_sources/on_boarding_local_data_src.dart';
@@ -41,9 +42,15 @@ Future<void> injectAuth() async {
         repo: sl<AuthRepo>(),
       ),
     )
+    ..registerFactory<GetCurrentUserUseCase>(
+      () => GetCurrentUserUseCase(
+        repo: sl<AuthRepo>(),
+      ),
+    )
     ..registerFactory<AuthBloc>(
       () => AuthBloc(
         signUp: sl<SignUpUseCase>(),
+        getCurrentUser: sl<GetCurrentUserUseCase>(),
       ),
     );
 }
