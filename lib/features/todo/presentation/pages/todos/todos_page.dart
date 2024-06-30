@@ -62,6 +62,11 @@ class _TodosState extends State<Todos> {
                     ),
                   ),
                   child: BlocBuilder<TodoBloc, TodoState>(
+                    buildWhen: (prev, current){
+                      if(current is TodoGetTodosSuccess) return true;
+
+                      return false;
+                    },
                     builder: (context, state) {
                       if (state is TodoGetTodosSuccess) {
                         return MasonryGridView.count(

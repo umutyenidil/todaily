@@ -32,6 +32,11 @@ final class TodoAddTodoSuccess extends TodoState {
   List<Object?> get props => [];
 }
 
+final class TodoDeleteTodoSuccess extends TodoState {
+  @override
+  List<Object?> get props => [];
+}
+
 final class TodoGetTodosSuccess extends TodoState {
   final List<TodoEntity> todos;
 

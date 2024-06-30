@@ -7,4 +7,8 @@ abstract interface class TodoRemoteDataSource {
   });
 
   Stream<List<TodoModel>> getTodos();
+
+  Future<void> deleteTodo({
+    required String id,
+  });
 }

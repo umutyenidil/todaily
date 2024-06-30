@@ -7,5 +7,9 @@ abstract interface class TodoRepository {
     required String description,
   });
 
+  ResultFuture<void> deleteTodo({
+    required String id,
+  });
+
   ResultFuture<Stream<List<TodoEntity>>> getTodos();
 }

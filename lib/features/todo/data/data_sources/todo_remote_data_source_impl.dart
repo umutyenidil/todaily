@@ -53,4 +53,19 @@ class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
       throw ServerException(message: e.toString());
     }
   }
+
+  @override
+  Future<void> deleteTodo({
+    required String id,
+  }) async {
+    try {
+      final query = firebaseFirestore.collection(kTodos);
+
+      final docRef = query.doc(id);
+
+      await docRef.delete();
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
+  }
 }

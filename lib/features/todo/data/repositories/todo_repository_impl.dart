@@ -40,4 +40,19 @@ class TodoRepositoryImpl implements TodoRepository {
       return Left(ServerFailure.fromException(e));
     }
   }
+
+  @override
+  ResultFuture<void> deleteTodo({
+    required String id,
+  }) async {
+    try {
+      await remoteDataSource.deleteTodo(
+        id: id,
+      );
+
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure.fromException(e));
+    }
+  }
 }
