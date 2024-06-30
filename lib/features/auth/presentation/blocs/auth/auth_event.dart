@@ -27,3 +27,16 @@ final class GetCurrentUserEvent extends AuthEvent {
   @override
   List<Object?> get props => [];
 }
+
+final class SignInEvent extends AuthEvent {
+  final String email;
+  final String password;
+
+  const SignInEvent({
+    required this.email,
+    required this.password,
+  });
+
+  @override
+  List<Object?> get props => [];
+}

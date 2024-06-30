@@ -86,7 +86,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     onPressed: () {
                       if (_pageController.page == 2.0) {
                         context.read<OnBoardingBloc>().add(CacheFirstTimeEvent());
-                        Navigator.of(context).pushReplacement(SignInPage.route());
+                        Navigator.of(context).pushReplacement(SignIn.route());
                         return;
                       }
                       _pageController.nextPage(

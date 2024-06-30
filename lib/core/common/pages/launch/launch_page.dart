@@ -54,7 +54,7 @@ class _LaunchPageState extends State<LaunchPage> {
               if (user != null) {
                 Navigator.of(context).pushReplacement(Home.route());
               } else {
-                Navigator.of(context).pushReplacement(SignInPage.route());
+                Navigator.of(context).pushReplacement(SignIn.route());
               }
             }
           },

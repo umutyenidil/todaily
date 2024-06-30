@@ -26,7 +26,7 @@ class Profile extends StatelessWidget {
     return BlocListener<ProfileBloc, ProfileState>(
       listener: (context, state) {
         if (state is ProfileSignOutSuccess) {
-          Navigator.of(context).pushAndRemoveUntil(SignInPage.route(), (_) => false);
+          Navigator.of(context).pushAndRemoveUntil(SignIn.route(), (_) => false);
         }
       },
       child: Scaffold(
@@ -46,7 +46,6 @@ class Profile extends StatelessWidget {
                 children: [
                   BlocBuilder<ProfileBloc, ProfileState>(
                     builder: (context, state) {
-                      print(state);
                       return Button(
                         isLoading: state is ProfileLoading,
                         onPressed: () {

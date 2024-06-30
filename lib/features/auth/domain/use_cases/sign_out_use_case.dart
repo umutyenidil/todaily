@@ -1,7 +1,7 @@
 import 'package:todaily/core/use_case/params.dart';
 import 'package:todaily/core/use_case/use_case.dart';
 import 'package:todaily/core/utils/typedefs.dart';
-import 'package:todaily/features/auth/domain/repositories/auth_repo.dart';
+import 'package:todaily/features/auth/domain/repositories/auth_repository.dart';
 
 class SignOutUseCase implements UseCase<void, NoParams> {
   final AuthRepository authRepository;

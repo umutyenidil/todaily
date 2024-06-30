@@ -1,9 +1,9 @@
 import 'package:todaily/core/use_case/use_case.dart';
 import 'package:todaily/core/utils/typedefs.dart';
-import 'package:todaily/features/auth/domain/entities/user_entity.dart';
-import 'package:todaily/features/auth/domain/repositories/auth_repo.dart';
+import 'package:todaily/features/auth/domain/entities/auth_entity.dart';
+import 'package:todaily/features/auth/domain/repositories/auth_repository.dart';
 
-class GetCurrentUserUseCase implements UseCase<UserEntity?, void> {
+class GetCurrentUserUseCase implements UseCase<AuthEntity?, void> {
   final AuthRepository repo;
 
   const GetCurrentUserUseCase({
@@ -11,7 +11,7 @@ class GetCurrentUserUseCase implements UseCase<UserEntity?, void> {
   });
 
   @override
-  ResultFuture<UserEntity?> call(void params) async {
+  ResultFuture<AuthEntity?> call(void params) async {
     return await repo.getCurrentUser();
   }
 }

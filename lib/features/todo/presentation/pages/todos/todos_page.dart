@@ -45,47 +45,49 @@ class _TodosState extends State<Todos> {
       appBar: const TodoPageAppBar(),
       floatingActionButton: const TodoFab(),
       body: GradientBackground(
-        child: Column(
-          children: [
-            const SafeArea(
-              child: DateList(),
-            ),
-            Expanded(
-              child: DecoratedBox(
-                decoration: const ShapeDecoration(
-                  color: ColorRes.WHITE,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20),
+        child: SafeArea(
+          child: Column(
+            children: [
+              // const SafeArea(
+              //   child: DateList(),
+              // ),
+              Expanded(
+                child: DecoratedBox(
+                  decoration: const ShapeDecoration(
+                    color: ColorRes.WHITE,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(20),
+                      ),
                     ),
                   ),
-                ),
-                child: BlocBuilder<TodoBloc, TodoState>(
-                  builder: (context, state) {
-                    if (state is TodoGetTodosSuccess) {
-                      return MasonryGridView.count(
-                        itemCount: state.todos.length,
-                        padding: const EdgeInsets.all(16),
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 16,
-                        crossAxisSpacing: 16,
-                        itemBuilder: (context, index) {
-                          final todo = state.todos[index];
-                          return TodoCard(
-                            key: ValueKey<String>(todo.id),
-                            todo: todo,
-                          );
-                        },
+                  child: BlocBuilder<TodoBloc, TodoState>(
+                    builder: (context, state) {
+                      if (state is TodoGetTodosSuccess) {
+                        return MasonryGridView.count(
+                          itemCount: state.todos.length,
+                          padding: const EdgeInsets.all(16),
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 16,
+                          crossAxisSpacing: 16,
+                          itemBuilder: (context, index) {
+                            final todo = state.todos[index];
+                            return TodoCard(
+                              key: ValueKey<String>(todo.id),
+                              todo: todo,
+                            );
+                          },
+                        );
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(),
                       );
-                    }
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

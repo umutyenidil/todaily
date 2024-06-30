@@ -2,9 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todaily/core/errors/exceptions.dart';
 import 'package:todaily/core/utils/constants.dart';
-import 'package:todaily/core/utils/typedefs.dart';
-import 'package:todaily/features/auth/data/data_sources/auth_remote_data_src.dart';
-import 'package:todaily/features/auth/data/models/user_model.dart';
+import 'package:todaily/features/auth/data/data_sources/auth_remote_data_source.dart';
+import 'package:todaily/features/auth/data/models/auth_model.dart';
 import 'dart:developer' as dev;
 
 class AuthRemoteDataSrcImpl implements AuthRemoteDataSrc {
@@ -17,7 +16,7 @@ class AuthRemoteDataSrcImpl implements AuthRemoteDataSrc {
   });
 
   @override
-  Future<UserModel> signUp({
+  Future<AuthModel> signUp({
     required String fullName,
     required String emailAddress,
     required String password,
@@ -32,16 +31,15 @@ class AuthRemoteDataSrcImpl implements AuthRemoteDataSrc {
         throw const ServerException(message: 'User is not created');
       }
 
-      final doc = firebaseFirestore.collection(kUsers).doc(credentials.user!.uid);
+      final doc = firebaseFirestore.collection(kProfiles).doc(credentials.user!.uid);
 
       await doc.set({
         kFullName: fullName,
       });
 
-      return UserModel(
+      return AuthModel(
         id: credentials.user!.uid,
-        fullName: fullName,
-        emailAddress: credentials.user!.email!,
+        email: credentials.user!.email!,
       );
     } on ServerException {
       rethrow;
@@ -53,7 +51,7 @@ class AuthRemoteDataSrcImpl implements AuthRemoteDataSrc {
   }
 
   @override
-  Future<UserModel?> getCurrentUser() async {
+  Future<AuthModel?> getCurrentUser() async {
     try {
       final result = firebaseAuth.currentUser;
 
@@ -61,16 +59,9 @@ class AuthRemoteDataSrcImpl implements AuthRemoteDataSrc {
         return null;
       }
 
-      final doc = firebaseFirestore.collection(kUsers).doc(result.uid);
-
-      final snapshot = await doc.get();
-
-      final ResultMap data = snapshot.data() as ResultMap;
-
-      return UserModel(
+      return AuthModel(
         id: result.uid,
-        fullName: data[kFullName],
-        emailAddress: result.email!,
+        email: result.email!,
       );
     } on ServerException {
       rethrow;
@@ -90,6 +81,34 @@ class AuthRemoteDataSrcImpl implements AuthRemoteDataSrc {
     } catch (e) {
       dev.log(e.toString());
       throw const ServerException();
+    }
+  }
+
+  @override
+  Future<AuthModel> signIn({
+    required String emailAddress,
+    required String password,
+  }) async {
+    try {
+      final credentials = await firebaseAuth.signInWithEmailAndPassword(
+        email: emailAddress,
+        password: password,
+      );
+
+      if (credentials.user == null) {
+        throw const ServerException(message: 'User is cannot signed in');
+      }
+
+      return AuthModel(
+        id: credentials.user!.uid,
+        email: credentials.user!.email!,
+      );
+    } on ServerException {
+      rethrow;
+    } on FirebaseAuthException catch (e) {
+      throw ServerException(message: e.message ?? "Something went wrong");
+    } catch (e) {
+      throw ServerException(message: e.toString());
     }
   }
 }

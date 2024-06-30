@@ -1,9 +1,9 @@
 import 'package:todaily/core/use_case/use_case.dart';
 import 'package:todaily/core/utils/typedefs.dart';
-import 'package:todaily/features/auth/domain/entities/user_entity.dart';
-import 'package:todaily/features/auth/domain/repositories/auth_repo.dart';
+import 'package:todaily/features/auth/domain/entities/auth_entity.dart';
+import 'package:todaily/features/auth/domain/repositories/auth_repository.dart';
 
-class SignUpUseCase implements UseCase<UserEntity, SignUpParams> {
+class SignUpUseCase implements UseCase<AuthEntity, SignUpParams> {
   final AuthRepository repo;
 
   const SignUpUseCase({
@@ -11,7 +11,7 @@ class SignUpUseCase implements UseCase<UserEntity, SignUpParams> {
   });
 
   @override
-  ResultFuture<UserEntity> call(SignUpParams params) async {
+  ResultFuture<AuthEntity> call(SignUpParams params) async {
     return await repo.signUp(
       fullName: params.fullName,
       emailAddress: params.emailAddress,

@@ -55,7 +55,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   const SignUpForm().padding(bottom: 32),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(SignInPage.route());
+                      Navigator.of(context).push(SignIn.route());
                     },
                     child: RichText(
                       text: TextSpan(

@@ -2,7 +2,7 @@
 const String kFirstTime = 'firstTime';
 
 //  Firestore
-const String kUsers = "users";
+const String kProfiles = "profiles";
 const String kTodos = "todos";
 const String kTitle = "title";
 const String kDescription = "description";
