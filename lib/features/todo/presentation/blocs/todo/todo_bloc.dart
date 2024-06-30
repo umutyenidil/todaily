@@ -27,12 +27,12 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   Future<void> _onGetTodosEvent(GetTodosEvent event, Emitter<TodoState> emit) async {
     final result = await getTodos(NoParams());
 
-    result.fold(
+    return result.fold(
       (failure) => emit(
         TodoError(message: failure.message),
       ),
       (data) {
-        emit.forEach(data, onData: (data) => TodoGetTodosSuccess(todos: data));
+        return emit.forEach(data, onData: (data) => TodoGetTodosSuccess(todos: data));
       },
     );
   }
