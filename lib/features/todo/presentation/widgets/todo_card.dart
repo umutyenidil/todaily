@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:todaily/core/resources/color_res.dart';
 import 'package:todaily/core/utils/snack_bar_utils.dart';
 import 'dart:math' as math;

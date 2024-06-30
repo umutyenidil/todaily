@@ -4,7 +4,7 @@ import 'package:todaily/features/auth/domain/entities/user_entity.dart';
 import 'package:todaily/features/auth/domain/repositories/auth_repo.dart';
 
 class SignUpUseCase implements UseCase<UserEntity, SignUpParams> {
-  final AuthRepo repo;
+  final AuthRepository repo;
 
   const SignUpUseCase({
     required this.repo,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todaily/core/common/pages/home/home_page.dart';
 import 'package:todaily/core/common/widgets/backgrounds/gradient_background.dart';
 import 'package:todaily/core/extensions/build_context_ext.dart';
 import 'package:todaily/core/extensions/widget_ext.dart';
@@ -9,7 +10,6 @@ import 'package:todaily/core/utils/snack_bar_utils.dart';
 import 'package:todaily/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:todaily/features/auth/presentation/pages/sign_in/sign_in_page.dart';
 import 'package:todaily/features/auth/presentation/widgets/sign_up_form.dart';
-import 'package:todaily/features/todo/presentation/pages/todos/todos_page.dart';
 
 class SignUpPage extends StatefulWidget {
   static const String path = '/SignInPage';
@@ -30,7 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthSignUpSuccess) {
-          Navigator.of(context).pushReplacement(TodosPage.route());
+          Navigator.of(context).pushAndRemoveUntil(Home.route(), (_) => false);
         }
         if (state is AuthError) {
           SnackBarUtils.showSnackBar(context, state.message);

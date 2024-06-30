@@ -7,6 +7,7 @@ import 'package:todaily/features/auth/data/data_sources/auth_remote_data_src_imp
 import 'package:todaily/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:todaily/features/auth/domain/repositories/auth_repo.dart';
 import 'package:todaily/features/auth/domain/use_cases/get_current_user_use_case.dart';
+import 'package:todaily/features/auth/domain/use_cases/sign_out_use_case.dart';
 import 'package:todaily/features/auth/domain/use_cases/sign_up_use_case.dart';
 import 'package:todaily/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:todaily/features/on_boarding/data/data_sources/on_boarding_local_data_src.dart';
@@ -16,6 +17,7 @@ import 'package:todaily/features/on_boarding/domain/repositories/on_boarding_rep
 import 'package:todaily/features/on_boarding/domain/use_cases/cache_first_time_use_case.dart';
 import 'package:todaily/features/on_boarding/domain/use_cases/is_first_time_use_case.dart';
 import 'package:todaily/features/on_boarding/presentation/blocs/on_boarding/on_boarding_bloc.dart';
+import 'package:todaily/features/profile/presentation/blocs/profile/profile_bloc.dart';
 import 'package:todaily/features/todo/data/data_sources/todo_remote_data_source.dart';
 import 'package:todaily/features/todo/data/data_sources/todo_remote_data_source_impl.dart';
 import 'package:todaily/features/todo/data/repositories/todo_repository_impl.dart';
@@ -30,6 +32,16 @@ Future<void> injectDependencies() async {
   await injectOnBoarding();
   await injectAuth();
   await injectTodo();
+  await injectProfile();
+}
+
+Future<void> injectProfile() async {
+  sl
+    ..registerFactory(
+      () => ProfileBloc(
+        signOut: sl<SignOutUseCase>(),
+      ),
+    );
 }
 
 Future<void> injectAuth() async {
@@ -40,19 +52,24 @@ Future<void> injectAuth() async {
         firebaseFirestore: FirebaseFirestore.instance,
       ),
     )
-    ..registerFactory<AuthRepo>(
+    ..registerFactory<AuthRepository>(
       () => AuthRepoImpl(
         remoteSrc: sl<AuthRemoteDataSrc>(),
       ),
     )
     ..registerFactory<SignUpUseCase>(
       () => SignUpUseCase(
-        repo: sl<AuthRepo>(),
+        repo: sl<AuthRepository>(),
+      ),
+    )
+    ..registerFactory(
+      () => SignOutUseCase(
+        authRepository: sl<AuthRepository>(),
       ),
     )
     ..registerFactory<GetCurrentUserUseCase>(
       () => GetCurrentUserUseCase(
-        repo: sl<AuthRepo>(),
+        repo: sl<AuthRepository>(),
       ),
     )
     ..registerFactory<AuthBloc>(

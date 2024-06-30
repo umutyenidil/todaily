@@ -7,5 +7,7 @@ abstract interface class AuthRemoteDataSrc {
     required String password,
   });
 
+  Future<void> signOut();
+
   Future<UserModel?> getCurrentUser();
 }

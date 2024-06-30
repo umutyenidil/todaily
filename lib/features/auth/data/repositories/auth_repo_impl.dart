@@ -6,7 +6,7 @@ import 'package:todaily/features/auth/data/data_sources/auth_remote_data_src.dar
 import 'package:todaily/features/auth/domain/entities/user_entity.dart';
 import 'package:todaily/features/auth/domain/repositories/auth_repo.dart';
 
-class AuthRepoImpl implements AuthRepo {
+class AuthRepoImpl implements AuthRepository {
   final AuthRemoteDataSrc remoteSrc;
 
   const AuthRepoImpl({
@@ -39,7 +39,20 @@ class AuthRepoImpl implements AuthRepo {
     try {
       final result = await remoteSrc.getCurrentUser();
 
-      return Right(result as UserEntity);
+      return Right(result as UserEntity?);
+    } on ServerException catch (e) {
+      return Left(
+        ServerFailure(message: e.message),
+      );
+    }
+  }
+
+  @override
+  ResultFuture<void> signOut() async{
+    try {
+      await remoteSrc.signOut();
+
+      return const Right(null);
     } on ServerException catch (e) {
       return Left(
         ServerFailure(message: e.message),

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:todaily/core/common/pages/home/home_page.dart';
 import 'package:todaily/core/common/widgets/backgrounds/gradient_background.dart';
 import 'package:todaily/core/resources/lottie_res.dart';
 import 'package:todaily/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:todaily/features/auth/presentation/pages/sign_in/sign_in_page.dart';
 import 'package:todaily/features/on_boarding/presentation/blocs/on_boarding/on_boarding_bloc.dart';
 import 'package:todaily/features/on_boarding/presentation/pages/on_boarding/on_boarding_page.dart';
-import 'package:todaily/features/todo/presentation/pages/todos/todos_page.dart';
 
 class LaunchPage extends StatefulWidget {
   static const String path = '/LaunchPage';
@@ -52,7 +52,7 @@ class _LaunchPageState extends State<LaunchPage> {
             if (state is AuthGetCurrentUserSuccess) {
               final user = state.user;
               if (user != null) {
-                Navigator.of(context).pushReplacement(TodosPage.route());
+                Navigator.of(context).pushReplacement(Home.route());
               } else {
                 Navigator.of(context).pushReplacement(SignInPage.route());
               }

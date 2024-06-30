@@ -11,23 +11,25 @@ import '../../widgets/date_list.dart';
 import '../../widgets/todo_card.dart';
 import '../../widgets/todo_page_app_bar.dart';
 
-class TodosPage extends StatefulWidget {
+class Todos extends StatefulWidget {
   static const String path = '/TodoPage';
 
   static route() => MaterialPageRoute(
-        builder: (_) => BlocProvider(
-          create: (context) => sl<TodoBloc>(),
-          child: const TodosPage(),
-        ),
+        builder: (_) => page(),
       );
 
-  const TodosPage({super.key});
+  static page() => BlocProvider(
+        create: (context) => sl<TodoBloc>(),
+        child: const Todos(),
+      );
+
+  const Todos({super.key});
 
   @override
-  State<TodosPage> createState() => _TodosPageState();
+  State<Todos> createState() => _TodosState();
 }
 
-class _TodosPageState extends State<TodosPage> {
+class _TodosState extends State<Todos> {
   @override
   void initState() {
     context.read<TodoBloc>().add(GetTodosEvent());
@@ -38,6 +40,7 @@ class _TodosPageState extends State<TodosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: false,
       extendBodyBehindAppBar: true,
       appBar: const TodoPageAppBar(),
       floatingActionButton: const TodoFab(),
@@ -59,7 +62,6 @@ class _TodosPageState extends State<TodosPage> {
                 ),
                 child: BlocBuilder<TodoBloc, TodoState>(
                   builder: (context, state) {
-                    print(state);
                     if (state is TodoGetTodosSuccess) {
                       return MasonryGridView.count(
                         itemCount: state.todos.length,
@@ -76,7 +78,6 @@ class _TodosPageState extends State<TodosPage> {
                         },
                       );
                     }
-
                     return const Center(
                       child: CircularProgressIndicator(),
                     );

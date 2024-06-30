@@ -5,6 +5,7 @@ import 'package:todaily/core/utils/constants.dart';
 import 'package:todaily/core/utils/typedefs.dart';
 import 'package:todaily/features/auth/data/data_sources/auth_remote_data_src.dart';
 import 'package:todaily/features/auth/data/models/user_model.dart';
+import 'dart:developer' as dev;
 
 class AuthRemoteDataSrcImpl implements AuthRemoteDataSrc {
   final FirebaseAuth firebaseAuth;
@@ -77,6 +78,18 @@ class AuthRemoteDataSrcImpl implements AuthRemoteDataSrc {
       throw ServerException(message: e.message ?? "Something went wrong");
     } catch (e) {
       throw ServerException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<void> signOut() async {
+    try {
+      await firebaseAuth.signOut();
+    } on FirebaseAuthException catch (e) {
+      throw ServerException(message: e.message ?? "Something went wrong");
+    } catch (e) {
+      dev.log(e.toString());
+      throw const ServerException();
     }
   }
 }
