@@ -23,4 +23,19 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return Left(ServerFailure.fromException(e));
     }
   }
+
+  @override
+  ResultFuture<ProfileEntity> updateProfile({
+    String? fullName,
+  }) async {
+    try {
+      final result = await _profileRemoteDataSource.updateProfile(
+        fullName: fullName,
+      );
+
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure.fromException(e));
+    }
+  }
 }

@@ -23,6 +23,7 @@ import 'package:todaily/features/profile/data/data_sources/profile_remote_data_s
 import 'package:todaily/features/profile/data/repositories/profile_repository_impl.dart';
 import 'package:todaily/features/profile/domain/repositories/profile_repository.dart';
 import 'package:todaily/features/profile/domain/use_cases/get_current_user_profile_use_case.dart';
+import 'package:todaily/features/profile/domain/use_cases/update_profile_use_case.dart';
 import 'package:todaily/features/profile/presentation/blocs/profile/profile_bloc.dart';
 import 'package:todaily/features/todo/data/data_sources/todo_remote_data_source.dart';
 import 'package:todaily/features/todo/data/data_sources/todo_remote_data_source_impl.dart';
@@ -59,8 +60,14 @@ Future<void> injectProfile() async {
         profileRepository: sl<ProfileRepository>(),
       ),
     )
+    ..registerFactory<UpdateProfileUseCase>(
+      () => UpdateProfileUseCase(
+        profileRepository: sl<ProfileRepository>(),
+      ),
+    )
     ..registerFactory<ProfileBloc>(
       () => ProfileBloc(
+        updateProfile: sl<UpdateProfileUseCase>(),
         getCurrentProfileUseCase: sl<GetCurrentUserProfileUseCase>(),
         signOut: sl<SignOutUseCase>(),
       ),

@@ -13,3 +13,14 @@ final class GetCurrentUserProfileEvent extends ProfileEvent {
   @override
   List<Object?> get props => [];
 }
+
+final class UpdateProfileEvent extends ProfileEvent {
+  final String? fullName;
+
+  const UpdateProfileEvent({
+    required this.fullName,
+  });
+
+  @override
+  List<Object?> get props => [];
+}

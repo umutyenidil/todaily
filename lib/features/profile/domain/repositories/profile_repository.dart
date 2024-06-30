@@ -3,4 +3,8 @@ import 'package:todaily/features/profile/domain/entities/profile_entity.dart';
 
 abstract interface class ProfileRepository {
   ResultFuture<ProfileEntity> getCurrentUserProfile();
+
+  ResultFuture<ProfileEntity> updateProfile({
+    String? fullName,
+  });
 }

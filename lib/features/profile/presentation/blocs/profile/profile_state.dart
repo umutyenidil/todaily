@@ -42,3 +42,14 @@ final class ProfileGetCurrentUserProfileSuccess extends ProfileState {
   @override
   List<Object?> get props => [];
 }
+
+final class ProfileUpdateProfileSuccess extends ProfileState {
+  final ProfileEntity profile;
+
+  const ProfileUpdateProfileSuccess({
+    required this.profile,
+  });
+
+  @override
+  List<Object?> get props => [];
+}
