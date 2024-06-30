@@ -68,7 +68,11 @@ class _TodosPageState extends State<TodosPage> {
                         mainAxisSpacing: 16,
                         crossAxisSpacing: 16,
                         itemBuilder: (context, index) {
-                          return const TodoCard();
+                          final todo = state.todos[index];
+                          return TodoCard(
+                            key: ValueKey<String>(todo.id),
+                            todo: todo,
+                          );
                         },
                       );
                     }
