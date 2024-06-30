@@ -31,3 +31,14 @@ final class ProfileSignOutSuccess extends ProfileState {
   @override
   List<Object?> get props => [];
 }
+
+final class ProfileGetCurrentUserProfileSuccess extends ProfileState {
+  final ProfileEntity profile;
+
+  const ProfileGetCurrentUserProfileSuccess({
+    required this.profile,
+  });
+
+  @override
+  List<Object?> get props => [];
+}

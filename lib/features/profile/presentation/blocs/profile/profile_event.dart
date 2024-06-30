@@ -8,3 +8,8 @@ final class SignOutEvent extends ProfileEvent {
   @override
   List<Object?> get props => [];
 }
+
+final class GetCurrentUserProfileEvent extends ProfileEvent {
+  @override
+  List<Object?> get props => [];
+}

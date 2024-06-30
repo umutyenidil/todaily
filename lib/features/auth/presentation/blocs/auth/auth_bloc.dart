@@ -4,6 +4,8 @@ import 'package:equatable/equatable.dart';
 import 'package:todaily/core/use_case/params.dart';
 import 'package:todaily/features/auth/domain/entities/auth_entity.dart';
 import 'package:todaily/features/auth/domain/use_cases/sign_in_use_case.dart';
+import 'package:todaily/features/profile/domain/entities/profile_entity.dart';
+import 'package:todaily/features/profile/domain/use_cases/get_current_user_profile_use_case.dart';
 
 import '../../../domain/use_cases/get_current_user_use_case.dart';
 import '../../../domain/use_cases/sign_up_use_case.dart';
@@ -16,14 +18,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignUpUseCase _signUp;
   final SignInUseCase _signIn;
   final GetCurrentUserUseCase _getCurrentUser;
+  final GetCurrentUserProfileUseCase _getCurrentUserProfile;
 
   AuthBloc({
     required SignUpUseCase signUp,
     required SignInUseCase signIn,
     required GetCurrentUserUseCase getCurrentUser,
+    required GetCurrentUserProfileUseCase getCurrentUserProfile,
   })  : _signUp = signUp,
         _signIn = signIn,
         _getCurrentUser = getCurrentUser,
+        _getCurrentUserProfile = getCurrentUserProfile,
         super(AuthInitial()) {
     // on<AuthEvent>((event, emit) {});
     on<AuthEvent>((_, emit) => emit(AuthLoading()));
@@ -47,9 +52,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (failure) => emit(
         AuthError(message: failure.message),
       ),
-      (_) => emit(
-        AuthSignInSuccess(),
-      ),
+      (_) async {
+        final result = await _getCurrentUserProfile(NoParams());
+
+        return result.fold(
+          (failure) => emit(
+            AuthError(message: failure.message),
+          ),
+          (profile) {
+            return emit(
+              AuthSignInSuccess(profile: profile),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -59,7 +75,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     final result = await _getCurrentUser(NoParams());
 
-    result.fold(
+    return result.fold(
       (failure) => emit(
         AuthError(message: failure.message),
       ),
@@ -79,11 +95,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       password: event.password,
     ));
 
-    result.fold(
+    return result.fold(
       (failure) => emit(
         AuthError(message: failure.message),
       ),
-      (_) => emit(AuthSignUpSuccess()),
+      (_) async {
+        final result = await _getCurrentUserProfile(NoParams());
+
+        return result.fold(
+          (failure) => emit(
+            AuthError(message: failure.message),
+          ),
+          (profile) {
+            return emit(
+              AuthSignUpSuccess(profile: profile),
+            );
+          },
+        );
+      },
     );
   }
 }

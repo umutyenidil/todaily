@@ -18,6 +18,11 @@ import 'package:todaily/features/on_boarding/domain/repositories/on_boarding_rep
 import 'package:todaily/features/on_boarding/domain/use_cases/cache_first_time_use_case.dart';
 import 'package:todaily/features/on_boarding/domain/use_cases/is_first_time_use_case.dart';
 import 'package:todaily/features/on_boarding/presentation/blocs/on_boarding/on_boarding_bloc.dart';
+import 'package:todaily/features/profile/data/data_sources/profile_remote_data_source.dart';
+import 'package:todaily/features/profile/data/data_sources/profile_remote_data_source_impl.dart';
+import 'package:todaily/features/profile/data/repositories/profile_repository_impl.dart';
+import 'package:todaily/features/profile/domain/repositories/profile_repository.dart';
+import 'package:todaily/features/profile/domain/use_cases/get_current_user_profile_use_case.dart';
 import 'package:todaily/features/profile/presentation/blocs/profile/profile_bloc.dart';
 import 'package:todaily/features/todo/data/data_sources/todo_remote_data_source.dart';
 import 'package:todaily/features/todo/data/data_sources/todo_remote_data_source_impl.dart';
@@ -37,11 +42,29 @@ Future<void> injectDependencies() async {
 }
 
 Future<void> injectProfile() async {
-  sl.registerFactory(
-    () => ProfileBloc(
-      signOut: sl<SignOutUseCase>(),
-    ),
-  );
+  sl
+    ..registerFactory<ProfileRemoteDataSource>(
+      () => ProfileRemoteDataSourceImpl(
+        firebaseAuth: FirebaseAuth.instance,
+        firebaseFirestore: FirebaseFirestore.instance,
+      ),
+    )
+    ..registerFactory<ProfileRepository>(
+      () => ProfileRepositoryImpl(
+        profileRemoteDataSource: sl<ProfileRemoteDataSource>(),
+      ),
+    )
+    ..registerFactory<GetCurrentUserProfileUseCase>(
+      () => GetCurrentUserProfileUseCase(
+        profileRepository: sl<ProfileRepository>(),
+      ),
+    )
+    ..registerFactory<ProfileBloc>(
+      () => ProfileBloc(
+        getCurrentProfileUseCase: sl<GetCurrentUserProfileUseCase>(),
+        signOut: sl<SignOutUseCase>(),
+      ),
+    );
 }
 
 Future<void> injectAuth() async {
@@ -82,6 +105,7 @@ Future<void> injectAuth() async {
         signIn: sl<SignInUseCase>(),
         signUp: sl<SignUpUseCase>(),
         getCurrentUser: sl<GetCurrentUserUseCase>(),
+        getCurrentUserProfile: sl<GetCurrentUserProfileUseCase>(),
       ),
     );
 }

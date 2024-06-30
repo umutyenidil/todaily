@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todaily/core/common/pages/home/home_page.dart';
+import 'package:todaily/core/common/providers/profile_provider.dart';
 import 'package:todaily/core/common/widgets/backgrounds/gradient_background.dart';
 import 'package:todaily/core/extensions/build_context_ext.dart';
 import 'package:todaily/core/extensions/widget_ext.dart';
@@ -30,6 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthSignUpSuccess) {
+          context.read<ProfileProvider>().setProfile(state.profile);
           Navigator.of(context).pushAndRemoveUntil(Home.route(), (_) => false);
         }
         if (state is AuthError) {

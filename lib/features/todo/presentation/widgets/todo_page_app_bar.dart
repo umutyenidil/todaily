@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todaily/core/common/providers/profile_provider.dart';
 import 'package:todaily/core/config/env.dart';
 import 'package:todaily/core/extensions/build_context_ext.dart';
 import 'package:todaily/core/resources/edge_insets_res.dart';
@@ -22,7 +24,7 @@ class TodoPageAppBar extends StatelessWidget implements PreferredSizeWidget {
                   style: context.textTheme.titleMedium,
                   children: [
                     TextSpan(
-                      text: 'Umut Yenidil',
+                      text: context.read<ProfileProvider>().profile!.fullName,
                       style: context.textTheme.titleLarge!.copyWith(
                         fontWeight: FontWeight.w600,
                       ),

@@ -26,8 +26,16 @@ final class AuthError extends AuthState {
 }
 
 final class AuthSignUpSuccess extends AuthState {
+  final ProfileEntity profile;
+
+  const AuthSignUpSuccess({
+    required this.profile,
+  });
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+    profile,
+  ];
 }
 
 final class AuthGetCurrentUserSuccess extends AuthState {
@@ -44,6 +52,14 @@ final class AuthGetCurrentUserSuccess extends AuthState {
 }
 
 final class AuthSignInSuccess extends AuthState {
+  final ProfileEntity profile;
+
+  const AuthSignInSuccess({
+    required this.profile,
+  });
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+    profile,
+  ];
 }
